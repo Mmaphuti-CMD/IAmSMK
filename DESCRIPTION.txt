@@ -1,0 +1,1 @@
+ASP.NET Core API for vehicle allocation management. Receives jobs, vehicles, and depots data via POST requests and returns allocation responses. Configured for Tailscale network access on port 5207 with Swagger documentation.

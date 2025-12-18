@@ -1,0 +1,23 @@
+@tempSMK_HostAddress = http://localhost:5207
+
+GET {{tempSMK_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{tempSMK_HostAddress}}/api/allocation
+Content-Type: application/json
+
+{
+  "jobs": [
+    { "jobId": 1, "customerId": 101, "startLat": -26.1, "startLng": 28.1 }
+  ],
+  "vehicles": [
+    { "vehicleId": 10, "capacity": 100 }
+  ],
+  "depots": [
+    { "depotId": 1, "lat": -26.2, "lng": 28.0 }
+  ]
+}
+
+###
