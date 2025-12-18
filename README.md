@@ -1,23 +1,120 @@
 # IAmSMK
 
-ASP.NET Core Web API for vehicle allocation management.
+ASP.NET Core Web API featuring two main controllers: **NameController** for interactive name queries and **AllocationController** for vehicle allocation management.
 
-## Features
+## Controllers
 
-- **Allocation Endpoint**: Process vehicle allocation requests with jobs, vehicles, and depots
-- **Name Endpoint**: Simple test endpoint
-- **Swagger Documentation**: Interactive API documentation available in development mode
-- **Tailscale Support**: Configured for Tailscale network access on port 5207
+### NameController
 
-## Endpoints
+A playful name identification API that responds to specific queries about its identity.
 
-### Allocation API
-- `GET /api/allocation` - Health check endpoint
-- `POST /api/allocation` - Submit allocation request with jobs, vehicles, and depots
+#### GET Endpoint
+- **Route**: `GET /name`
+- **Response**: Returns a simple connection confirmation message
+- **Example Response**:
+  ```json
+  "API is working! Connected successfully."
+  ```
 
-### Name API
-- `GET /name` - Connection test
-- `POST /name` - Name query endpoint
+#### POST Endpoint
+- **Route**: `POST /name`
+- **Request Body**: 
+  ```json
+  {
+    "input": "What is my name"
+  }
+  ```
+- **Logic**:
+  - If the `input` field exactly matches `"What is my name"` (case-sensitive), returns: `"I am SMK!"`
+  - For any other input or missing input, returns a `400 Bad Request` with the message: `"Hahaha!!!"`
+
+**Example Success Request**:
+```bash
+POST /name
+Content-Type: application/json
+
+{
+  "input": "What is my name"
+}
+```
+
+**Response** (200 OK):
+```json
+"I am SMK!"
+```
+
+**Example Failure Request**:
+```bash
+POST /name
+Content-Type: application/json
+
+{
+  "input": "who are you"
+}
+```
+
+**Response** (400 Bad Request):
+```json
+"Hahaha!!!"
+```
+
+### AllocationController
+
+Vehicle allocation management API that processes allocation requests with jobs, vehicles, and depots.
+
+#### GET Endpoint
+- **Route**: `GET /api/allocation`
+- **Response**: Returns API status and endpoint information
+- **Example Response**:
+  ```json
+  {
+    "message": "Allocation API is running and accessible",
+    "endpoint": "/api/allocation",
+    "method": "POST",
+    "timestamp": "2024-01-01T00:00:00Z"
+  }
+  ```
+
+#### POST Endpoint
+- **Route**: `POST /api/allocation`
+- **Request Body**: 
+  ```json
+  {
+    "jobs": [
+      {
+        "jobId": 1,
+        "customerId": 100,
+        "startLat": 40.7128,
+        "startLng": -74.0060
+      }
+    ],
+    "vehicles": [
+      {
+        "vehicleId": 1,
+        "capacity": 100
+      }
+    ],
+    "depots": [
+      {
+        "depotId": 1,
+        "lat": 40.7580,
+        "lng": -73.9855
+      }
+    ]
+  }
+  ```
+- **Response**: Returns the received data with counts
+- **Example Response**:
+  ```json
+  {
+    "receivedJobs": 1,
+    "receivedVehicles": 1,
+    "receivedDepots": 1,
+    "jobs": [...],
+    "vehicles": [...],
+    "depots": [...]
+  }
+  ```
 
 ## Requirements
 
@@ -34,4 +131,4 @@ The API will start on port 5207 and display available access URLs including Tail
 
 ## Development
 
-Swagger UI is available at `/swagger` when running in development mode.
+Swagger UI is available at `/swagger` when running in development mode for testing both controllers.

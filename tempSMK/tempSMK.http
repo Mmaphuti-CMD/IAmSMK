@@ -1,8 +1,5 @@
 @tempSMK_HostAddress = http://localhost:5207
 
-GET {{tempSMK_HostAddress}}/weatherforecast/
-Accept: application/json
-
 ###
 
 POST {{tempSMK_HostAddress}}/api/allocation
